@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+
+def cat_arrays(arr1, arr2):
+    """Function that concatenates two arrays
+
+    Arguments:
+        arr1 {[list]} --  are lists of ints/floats
+        arr2 {[list]} --  are lists of ints/floats
+
+    Returns:
+        [list] -- New list with
+    """
+    return arr1 + arr2
