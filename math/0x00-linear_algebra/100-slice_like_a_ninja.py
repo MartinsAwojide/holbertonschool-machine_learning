@@ -17,9 +17,8 @@ def np_slice(matrix, axes={}):
     """
     slices = []
     for i in range(len(matrix.shape)):
-        for keys, values in axes.items():
-            if i == 0 and keys != 0:
-                slices.append(slice(None, None, None))
-            if keys == i:
-                slices.append(slice(*values))
+        if i in axes.keys():
+            slices.append(slice(*axes[i]))
+        else:
+            slices.append(slice(None, None, None))
     return matrix[tuple(slices)]
