@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+'''slices a matrix'''
 
 
 def np_slice(matrix, axes={}):

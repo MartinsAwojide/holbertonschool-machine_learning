@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+'''calculates the shape'''
 
 
 def np_shape(matrix):
