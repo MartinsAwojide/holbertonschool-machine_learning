@@ -30,7 +30,8 @@ def cat_matrices(mat1, mat2, axis=0):
     Returns:
         [ndarray]
     """
-    if len(matrix_shape(mat1)) == len(matrix_shape(mat2)):
+    if (len(matrix_shape(mat1)) == len(matrix_shape(mat2))) and \
+            (len(matrix_shape(mat1)) > axis or len(matrix_shape(mat1)) > axis):
 
         result = []
 
