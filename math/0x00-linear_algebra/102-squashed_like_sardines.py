@@ -31,7 +31,7 @@ def cat_matrices(mat1, mat2, axis=0):
         [ndarray]
     """
     if (len(matrix_shape(mat1)) == len(matrix_shape(mat2))) and \
-            (len(matrix_shape(mat1)) > axis or len(matrix_shape(mat1)) > axis):
+            (len(matrix_shape(mat1)) > axis and len(matrix_shape(mat1)) > axis):
 
         result = []
 
