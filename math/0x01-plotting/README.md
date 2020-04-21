@@ -77,7 +77,7 @@ Complete the following source code to plot a stacked bar graph:
 * The y-axis should range from 0 to 80 with ticks every 10 units
 * The title should be Number of Fruit per Person
 
-### 7. Gradient
+### 100. Gradient
 Complete the following source code to create a scatter plot of sampled elevations on a mountain:
 
 * The x-axis should be labeled x coordinate (m)
@@ -86,7 +86,7 @@ Complete the following source code to create a scatter plot of sampled elevation
 * A colorbar should be used to display elevation
 * The colorbar should be labeled elevation (m)
 
-### 7. PCA
+### 101. PCA
 Principle Component Analysis (PCA) is a vital procedure used in data science for reducing the dimensionality of data (in turn, decreasing computation cost). It is also largely used for visualizing high dimensional data in 2 or 3 dimensions. For this task, you will be visualizing the Iris flower data set . You will need to download the file pca.npz to test your code. You do not need to push this dataset to github. Complete the following source code to visualize the data in 3D:
 
 * The title of the plot should be PCA of Iris Dataset
