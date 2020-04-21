@@ -26,7 +26,7 @@ np.random.seed(5)
 student_grades = np.random.normal(68, 15, 50)
 
 # Create a figure
-fig = plt.figure()
+fig = plt.figure(figsize=(8, 8))
 
 # plt.subplot2grid(shape, location, rowspan, colspan)
 ax0 = plt.subplot2grid((3, 2), (0, 0))
@@ -71,4 +71,6 @@ ax4.set_title('Project A', fontsize='x-small')
 ax4.set_yticks(np.arange(0, 30, 5))
 
 fig.suptitle('All in One')
+plt.subplots_adjust(hspace=0.5)
+plt.savefig('5-all_in_one')
 plt.show()
