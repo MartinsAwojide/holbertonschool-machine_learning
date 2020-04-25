@@ -20,10 +20,11 @@ def poly_derivative(poly):
     if len(poly) == 1:
         return [0]
     derivative = []
-    i = 1
+    poly.pop(0)
+    i = 0
     while i < len(poly):
         if type(poly[i]) is not int and type(poly[i]) is not float:
             return None
-        derivative.append(poly[i] * i)
+        derivative.append(poly[i] * (i + 1))
         i += 1
     return derivative
