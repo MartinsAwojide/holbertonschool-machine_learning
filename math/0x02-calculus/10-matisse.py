@@ -22,9 +22,8 @@ def poly_derivative(poly):
     derivative = []
     poly.pop(0)
     i = 0
-    while i < len(poly):
+    for i in range(len(poly)):
         if type(poly[i]) is not int and type(poly[i]) is not float:
             return None
         derivative.append(poly[i] * (i + 1))
-        i += 1
     return derivative
