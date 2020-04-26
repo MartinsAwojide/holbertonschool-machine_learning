@@ -25,6 +25,8 @@ def poly_integral(poly, C=0):
         return None
     if type(C) is not int and type(C) is not float:
         return None
+    if poly == [0]:
+        return [C]
     integral = [C]
     for i in range(len(poly)):
         if type(poly[i]) is not int and type(poly[i]) is not float:
