@@ -19,6 +19,8 @@ def poly_integral(poly, C=0):
     Returns:
         new list of coefficients representing the integral of the polynomial
     """
+    if type(poly) is not list:
+        return None
     if len(poly) == 0:
         return None
     if type(C) is not int and type(C) is not float:
