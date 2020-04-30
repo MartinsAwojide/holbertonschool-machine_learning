@@ -48,5 +48,4 @@ class Exponential:
         if x < 0:
             return 0
         result = Exponential.e ** (-x * self.lambtha)
-        print(result)
         return 1 - result
