@@ -38,8 +38,8 @@ class Poisson:
         factorial = 1
         if k < 0:
             return 0
-        if k is not int:
-            int(k)
+        if type(k) is not int:
+            k = int(k)
         for i in range(1, k + 1):
             factorial *= i
         pmf = Poisson.e ** (-self.lambtha) * self.lambtha ** k / factorial
