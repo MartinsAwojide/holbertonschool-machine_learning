@@ -17,11 +17,12 @@ class Normal:
         :param mean: is the mean of the distribution
         :param stddev: is the standard deviation of the distribution
         """
-        self.mean = float(mean)
-        self.stddev = float(stddev)
         if data is None:
             if stddev < 0:
                 raise ValueError("stddev must be a positive value")
+            else:
+                self.mean = float(mean)
+                self.stddev = float(stddev)
         else:
             if type(data) is not list:
                 raise TypeError("data must be a list")
