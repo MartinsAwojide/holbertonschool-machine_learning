@@ -18,9 +18,13 @@ class Binomial:
         if data is None:
             if n < 0:
                 raise ValueError("n must be a positive value")
-            if p < 0 or p > 1:
+            if p <= 0 or p >= 1:
                 raise ValueError("p must be greater than 0 and less than 1")
         else:
+            if type(data) is not list:
+                raise TypeError("data must be a list")
+            if len(data) < 2:
+                raise ValueError("data must contain multiple values")
             mean = sum(data) / len(data)
             var = []
             for i in range(len(data)):
