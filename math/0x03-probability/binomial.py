@@ -43,8 +43,8 @@ class Binomial:
                  If k is not an integer, convert it to an integer
                  If k is out of range, return 0
         """
-        if k is not int:
-            int(k)
+        if type(k) is not int:
+            k = int(k)
         if k < 0 or k > self.n:
             return 0
         else:
@@ -68,6 +68,10 @@ class Binomial:
                  If k is not an integer, convert it to an integer
                  If k is out of range, return 0
         """
+        if type(k) is not int:
+            k = int(k)
+        if k < 0:
+            return 0
         result = []
         for i in range(k + 1):
             result.append(self.pmf(i))
