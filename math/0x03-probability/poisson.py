@@ -53,6 +53,10 @@ class Poisson:
                   If k is out of range, return 0
         :return: the CDF value for k
         """
+        if k < 0:
+            return 0
+        if type(k) is not int:
+            k = int(k)
         result = []
         for i in range(k + 1):
             result.append(self.pmf(i))
