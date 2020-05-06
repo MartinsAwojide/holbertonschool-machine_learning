@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
+"""Class Neuron"""
 import numpy as np
 import matplotlib.pyplot as plt
-"""Class Neuron"""
 
 
 class Neuron:
