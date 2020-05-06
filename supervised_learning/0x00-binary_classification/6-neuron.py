@@ -90,7 +90,6 @@ class Neuron:
         :param alpha: is the learning rate
         :return: Updates the private attributes __W and __b
         """
-        self.forward_prop(X)
         dz = A - Y
         m = Y.shape[1]
         dw = np.matmul(X, dz.T) / m  # A, Y are transpose for operation
