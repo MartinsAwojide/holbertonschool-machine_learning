@@ -95,7 +95,7 @@ class Neuron:
         dw = np.matmul(X, dz.T) / m  # A, Y are transpose for operation
         db = dz.sum() / m
         self.__W = self.__W - (alpha * dw.T)
-        self.__b = self.b - (alpha * db)
+        self.__b = self.__b - (alpha * db)
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """
