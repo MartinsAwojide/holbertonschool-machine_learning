@@ -21,7 +21,6 @@ class DeepNeuralNetwork:
         layers_num = np.array(layers)
         if np.any(layers_num < 1) or len(layers) == 0:
             raise TypeError("layers must be a list of positive integers")
-        print(layers)
         self.L = len(layers)
         self.cache = {}
         self.weights = {}
