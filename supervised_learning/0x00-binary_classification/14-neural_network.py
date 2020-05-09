@@ -151,7 +151,7 @@ class NeuralNetwork:
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """
         Trains the neural network
-        :param X: is a ndarray with shape (nx, m) that contains the input data
+        :pa ram X: is a ndarray with shape (nx, m) that contains the input data
                   nx is the number of input features to the neuron
                   m is the number of examples
         :param Y: is a numpy.ndarray with shape (1, m) that contains
