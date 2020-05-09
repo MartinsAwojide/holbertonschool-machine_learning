@@ -121,18 +121,19 @@ class DeepNeuralNetwork:
         """
         for i in reversed(range(self.__L)):
             key_w = "W{}".format(i+1)
-            key_w2 = "W{}".format(i+2)
             key_b = "b{}".format(i+1)
             key_a = "A{}".format(i+1)
             A = cache[key_a]
             m = Y.shape[1]
             if i == self.__L - 1:
                 dz = A - Y
+                w = self.__weights[key_w]
             else:
-                part1 = np.matmul(self.__weights[key_w2].T, dz)
+                part1 = np.matmul(w.T, dz)
                 part2 = A * (1 - A)
                 dz = part1 * part2
+                w = self.__weights[key_w]
             dw = np.matmul(cache["A{}".format(i)], dz.T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
-            self.__weights[key_w] -= (alpha * dw.T)
-            self.__weights[key_b] -= (alpha * db)
+            self.__weights[key_w] = self.__weights[key_w] - (alpha * dw.T)
+            self.__weights[key_b] = self.__weights[key_b] - (alpha * db)
