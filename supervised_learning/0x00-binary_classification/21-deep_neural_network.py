@@ -124,7 +124,7 @@ class DeepNeuralNetwork:
             key_w2 = "W{}".format(i+2)
             key_b = "b{}".format(i+1)
             key_a = "A{}".format(i+1)
-            A = self.__cache[key_a]
+            A = cache[key_a]
             m = Y.shape[1]
             if i == self.__L - 1:
                 dz = A - Y
@@ -132,7 +132,7 @@ class DeepNeuralNetwork:
                 part1 = np.matmul(self.__weights[key_w2].T, dz)
                 part2 = A * (1 - A)
                 dz = part1 * part2
-            dw = np.matmul(self.__cache["A{}".format(i)], dz.T) / m
+            dw = np.matmul(cache["A{}".format(i)], dz.T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
             self.__weights[key_w] -= (alpha * dw.T)
             self.__weights[key_b] -= (alpha * db)
