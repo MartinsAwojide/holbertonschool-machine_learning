@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
+import os
 
 
 class DeepNeuralNetwork:
@@ -183,7 +184,7 @@ class DeepNeuralNetwork:
         :param filename: is the file to which the object should be saved
         :return: Nothing
         """
-        if '.pkl' not in filename:
+        if filename[-4:] != '.pkl':
             filename = filename + '.pkl'
         with open(filename, 'wb') as fd:
             pickle.dump(self, fd)
@@ -195,9 +196,9 @@ class DeepNeuralNetwork:
         :param filename: is the file from which the object should be loaded
         :return: the loaded object, or None if filename doesn’t exist
         """
-        try:
+        if os.path.exists(filename) is True:
             with open(filename, 'rb') as fd:
                 file_object = pickle.load(fd)
                 return file_object
-        except FileNotFoundError:
+        else:
             return None
