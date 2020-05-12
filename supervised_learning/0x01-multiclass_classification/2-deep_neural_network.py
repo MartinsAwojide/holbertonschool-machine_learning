@@ -168,8 +168,7 @@ class DeepNeuralNetwork:
                 raise TypeError("step must be an integer")
             if step <= 0 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
-        if type(step) is not int:
-            raise TypeError("step must be an integer")
+
         graph_iteration = []
         graph_cost = []
 
@@ -201,8 +200,8 @@ class DeepNeuralNetwork:
         """
         if filename[-4:] != '.pkl':
             filename = filename + '.pkl'
-        with open(filename, 'wb') as fd:
-            pickle.dump(self, fd)
+        with open(filename, 'wb') as f:
+            pickle.dump(self, f)
 
     @staticmethod
     def load(filename):
@@ -212,8 +211,8 @@ class DeepNeuralNetwork:
         :return: the loaded object, or None if filename doesn’t exist
         """
         if os.path.exists(filename) is True:
-            with open(filename, 'rb') as fd:
-                file_object = pickle.load(fd)
+            with open(filename, 'rb') as f:
+                file_object = pickle.load(f)
             return file_object
         else:
             return None
