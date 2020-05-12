@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""One hot decode"""
 import numpy as np
 
 

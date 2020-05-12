@@ -205,6 +205,11 @@ class DeepNeuralNetwork:
         return self.evaluate(X, Y)
 
     def save(self, filename):
+        """
+        Saves the instance object to a file in pickle format
+        :param filename: is the file to which the object should be saved
+        :return: Nothing
+        """
         if '.pkl' not in filename:
             filename = filename + '.pkl'
         with open(filename, 'wb') as fd:
@@ -212,6 +217,11 @@ class DeepNeuralNetwork:
 
     @staticmethod
     def load(filename):
+        """
+        Loads a pickled DeepNeuralNetwork object
+        :param filename: is the file from which the object should be loaded
+        :return: the loaded object, or None if filename doesn’t exist
+        """
         try:
             with open(filename, 'rb') as fd:
                 file_object = pickle.load(fd)
