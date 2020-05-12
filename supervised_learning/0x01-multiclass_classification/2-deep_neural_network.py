@@ -199,6 +199,6 @@ class DeepNeuralNetwork:
         if os.path.exists(filename) is True:
             with open(filename, 'rb') as fd:
                 file_object = pickle.load(fd)
-                return file_object
+            return file_object
         else:
             return None
