@@ -177,7 +177,8 @@ class DeepNeuralNetwork:
             cost = self.cost(Y, output)
 
             if step and (i % step == 0 or i == iterations):
-                print("Cost after {} iterations: {}".format(i, cost))
+                if verbose is True:
+                    print("Cost after {} iterations: {}".format(i, cost))
                 graph_iteration.append(i)
                 graph_cost.append(cost)
 
