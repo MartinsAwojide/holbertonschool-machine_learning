@@ -160,6 +160,20 @@ class DeepNeuralNetwork:
         :return: the evaluation of the training data after
         iterations of training have occurred
         """
+        if type(iterations) is not int:
+            raise TypeError("iterations must be an integer")
+        if iterations <= 0:
+            raise ValueError("iterations must be a positive integer")
+        if type(alpha) is not float:
+            raise TypeError("alpha must be a float")
+        if alpha <= 0:
+            raise ValueError("alpha must be positive")
+        if verbose is True or graph is True:
+            if type(step) is not int:
+                raise TypeError("step must be an integer")
+            if step <= 0 or step > iterations:
+                raise ValueError("step must be positive and <= iterations")
+
         graph_iteration = []
         graph_cost = []
 
@@ -168,7 +182,8 @@ class DeepNeuralNetwork:
             cost = self.cost(Y, output)
 
             if step and (i % step == 0 or i == iterations):
-                print("Cost after {} iterations: {}".format(i, cost))
+                if verbose is True:
+                    print("Cost after {} iterations: {}".format(i, cost))
                 graph_iteration.append(i)
                 graph_cost.append(cost)
 
