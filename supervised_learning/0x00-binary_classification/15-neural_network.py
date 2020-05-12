@@ -181,6 +181,8 @@ class NeuralNetwork:
                 raise TypeError("step must be an integer")
             if step <= 0 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
+        if type(step) is not int:
+            raise TypeError("step must be an integer")
         graph_iteration = []
         graph_cost = []
 
