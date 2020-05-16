@@ -10,6 +10,6 @@ def create_placeholders(nx, classes):
     :param classes: the number of classes in our classifier
     :return: placeholders named x and y, respectively
     """
-    x = tf.placeholder("float", [None, nx])
-    y = tf.placeholder("float", [None, classes])
+    x = tf.placeholder("float", [None, nx], name="x")
+    y = tf.placeholder("float", [None, classes], name="y")
     return x, y
