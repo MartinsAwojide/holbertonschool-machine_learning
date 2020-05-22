@@ -33,7 +33,12 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         train = {x: X_train, y: Y_train}
         valid = {x: X_valid, y: Y_valid}
         m = X_train.shape[0]
-        complete_minibatches = int(m / batch_size)  # truncates to floor number
+
+        complete_minibatches = m / batch_size  # truncates to floor number
+        if complete_minibatches.is_integer() is True:
+            complete_minibatches = int(complete_minibatches)
+        else:
+            complete_minibatches = (int(complete_minibatches) + 1)
 
         for i in range(epochs + 1):
             cost_t = sess.run(loss, feed_dict=train)
