@@ -182,11 +182,11 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     tf.add_to_collection('y_hat', y_hat)
 
     accuracy = calculate_accuracy(y, y_hat)
-    loss = calculate_loss(y, y_hat)
     tf.add_to_collection('accuracy', accuracy)
+    loss = calculate_loss(y, y_hat)
     tf.add_to_collection('loss', loss)
     # apply learning rate decay to test adam
-    global_step = tf.Variable(0, trainable=False)
+    global_step = tf.Variable(0)
     change_alpha = learning_rate_decay(alpha, decay_rate, global_step, 1)
     train_op = create_Adam_op(loss, change_alpha, beta1, beta2, epsilon)
     tf.add_to_collection('train_op', train_op)
@@ -199,12 +199,12 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
         sess.run(init)
         train = {x: X_train, y: Y_train}
         valid = {x: X_valid, y: Y_valid}
-        complete_minibatches = m / batch_size
-
+        m = X_train.shape[0]
+        # mini batch definition
         if m % batch_size == 0:
-            complete_minibatches = int(complete_minibatches)
+            complete_minibatches = m // batch_size
         else:
-            complete_minibatches = (int(complete_minibatches) + 1)
+            complete_minibatches = m // batch_size + 1
 
         for i in range(epochs + 1):
             cost_t = sess.run(loss, feed_dict=train)
