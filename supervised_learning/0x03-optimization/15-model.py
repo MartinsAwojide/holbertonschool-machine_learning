@@ -113,6 +113,34 @@ def shuffle_data(X, Y):
     return shuffled_X, shuffled_Y
 
 
+def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
+    """
+    creates learning rate decay operation in tensorflow with inverse time decay
+    :param alpha: is the original learning rate
+    :param decay_rate: weight used determine the rate at which alpha will decay
+    :param global_step: number of passes of gradient descent that have elapsed
+    :param decay_step: number of passes of gradient descent that should
+    occur before alpha is decayed further
+    :return: the learning rate decay operation
+    """
+    return tf.train.inverse_time_decay(alpha, global_step, decay_step,
+                                       decay_rate, staircase=True)
+
+
+def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
+    """
+    creates the training operation for a neural network in tensorflow using
+    the Adam optimization algorithm
+    :param loss: is the loss of the network
+    :param alpha: is the learning rate
+    :param beta1: is the weight used for the first moment
+    :param beta2: is the weight used for the second moment
+    :param epsilon: is a small number to avoid division by zero
+    :return: the Adam optimization operation
+    """
+    return tf.train.AdamOptimizer(alpha, beta1, beta2, epsilon).minimize(loss)
+
+
 def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
           beta2=0.999, epsilon=1e-8, decay_rate=1, batch_size=32,
           epochs=5, save_path='/tmp/model.ckpt'):
@@ -160,11 +188,8 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     tf.add_to_collection('loss', loss)
     # apply learning rate decay to test adam
     global_step = tf.Variable(0, trainable=False)
-    change_alpha = tf.train.inverse_time_decay(alpha, global_step, decay_rate,
-                                               1, staircase=True)
-
-    train_op = tf.train.AdamOptimizer(change_alpha, beta1,
-                                      beta2, epsilon).minimize(loss)
+    change_alpha = learning_rate_decay(alpha, decay_rate, global_step, 1)
+    train_op = create_Adam_op(loss, change_alpha, beta1, beta2, epsilon)
     tf.add_to_collection('train_op', train_op)
 
     init = tf.global_variables_initializer()
