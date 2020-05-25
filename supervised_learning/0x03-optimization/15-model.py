@@ -207,42 +207,52 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     # initialize session and use mini batch gradient descent
     with tf.Session() as sess:
         sess.run(init)
-        train = {x: X_train, y: Y_train}
-        valid = {x: X_valid, y: Y_valid}
+
         m = X_train.shape[0]
         # mini batch definition
         if m % batch_size == 0:
-            complete_minibatches = m // batch_size
+            n_batches = m // batch_size
         else:
-            complete_minibatches = m // batch_size + 1
+            n_batches = m // batch_size + 1
 
+        # training loop
         for i in range(epochs + 1):
-            cost_t = sess.run(loss, feed_dict=train)
-            acc_t = sess.run(accuracy, feed_dict=train)
-            cost_v = sess.run(loss, feed_dict=valid)
-            acc_v = sess.run(accuracy, feed_dict=valid)
-
+            cost_train = sess.run(loss, feed_dict={x: X_train, y: Y_train})
+            accuracy_train = sess.run(accuracy,
+                                      feed_dict={x: X_train, y: Y_train})
+            cost_val = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+            accuracy_val = sess.run(accuracy,
+                                    feed_dict={x: X_valid, y: Y_valid})
             print("After {} epochs:".format(i))
-            print("\tTraining Cost: {}".format(cost_t))
-            print("\tTraining Accuracy: {}".format(acc_t))
-            print("\tValidation Cost: {}".format(cost_v))
-            print("\tValidation Accuracy: {}".format(acc_v))
+            print("\tTraining Cost: {}".format(cost_train))
+            print("\tTraining Accuracy: {}".format(accuracy_train))
+            print("\tValidation Cost: {}".format(cost_val))
+            print("\tValidation Accuracy: {}".format(accuracy_val))
 
-            if i < epochs:  # number of epochs to do
+            if i < epochs:
                 shuffled_X, shuffled_Y = shuffle_data(X_train, Y_train)
-                for k in range(complete_minibatches):  # mini batches
-                    start = k * batch_size  # ex: batch_size=10, start:0,10,20
-                    end = (k + 1) * batch_size  # same:10,20,30
-                    if end > m:  # end case, goes until m otherwise out range
+
+                # mini batches
+                for b in range(n_batches):
+                    start = b * batch_size
+                    end = (b + 1) * batch_size
+                    if end > m:
                         end = m
-                    mini_batch_X = shuffled_X[start:end]
-                    mini_batch_Y = shuffled_Y[start:end]
-                    new_train = {x: mini_batch_X, y: mini_batch_Y}
-                    sess.run(train_op, feed_dict=new_train)
-                    if (k + 1) % 100 == 0 and k != 0:
-                        mb_c, mb_a = sess.run([loss, accuracy], new_train)
-                        print("\tStep {}:".format(k + 1))
-                        print("\t\tCost: {}".format(mb_c))
-                        print("\t\tAccuracy: {}".format(mb_a))
+                    X_mini_batch = shuffled_X[start:end]
+                    Y_mini_batch = shuffled_Y[start:end]
+
+                    next_train = {x: X_mini_batch, y: Y_mini_batch}
+                    sess.run(train_op, feed_dict=next_train)
+
+                    if (b + 1) % 100 == 0 and b != 0:
+                        loss_mini_batch = sess.run(loss, feed_dict=next_train)
+                        acc_mini_batch = sess.run(accuracy,
+                                                  feed_dict=next_train)
+                        print("\tStep {}:".format(b + 1))
+                        print("\t\tCost: {}".format(loss_mini_batch))
+                        print("\t\tAccuracy: {}".format(acc_mini_batch))
+
+            # Update of global step variable for each iteration
             sess.run(tf.assign(global_step, global_step + 1))
+
         return saver.save(sess, save_path)
