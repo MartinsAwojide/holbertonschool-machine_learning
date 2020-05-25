@@ -140,6 +140,18 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     return tf.train.AdamOptimizer(alpha, beta1, beta2, epsilon).minimize(loss)
 
 
+def create_placeholders(nx, classes):
+    """
+    return two placeholders
+    :param nx: the number of feature columns in our data
+    :param classes: the number of classes in our classifier
+    :return: placeholders named x and y, respectively
+    """
+    x = tf.placeholder("float", [None, nx], name="x")
+    y = tf.placeholder("float", [None, classes], name="y")
+    return x, y
+
+
 def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
           beta2=0.999, epsilon=1e-8, decay_rate=1, batch_size=32,
           epochs=5, save_path='/tmp/model.ckpt'):
@@ -162,77 +174,82 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     :param save_path: is the path where the model should be saved to
     :return: the path where the model was saved
     """
-
-    # Data(X,Y); X=(50000,784) Y=(50000,10)
-    m, nx = Data_train[0].shape
+    nx = Data_train[0].shape[1]
     classes = Data_train[1].shape[1]
+
     (X_train, Y_train) = Data_train
     (X_valid, Y_valid) = Data_valid
 
-    # first create a placeholder X, Y
-    x = tf.placeholder("float", [None, nx], name="x")
-    y = tf.placeholder("float", [None, classes], name="y")
+    x, y = create_placeholders(nx, classes)
+    tf.add_to_collection("x", x)
+    tf.add_to_collection("y", y)
 
-    tf.add_to_collection('x', x)
-    tf.add_to_collection('y', y)
+    y_pred = forward_prop(x, layers, activations)
+    tf.add_to_collection("y_pred", y_pred)
 
-    # we need to print loss and accuracy, for that I need Y_hat
+    accuracy = calculate_accuracy(y, y_pred)
+    tf.add_to_collection("accuracy", accuracy)
 
-    y_hat = forward_prop(x, layers, activations)
-    tf.add_to_collection('y_hat', y_hat)
+    loss = calculate_loss(y, y_pred)
+    tf.add_to_collection("loss", loss)
 
-    accuracy = calculate_accuracy(y, y_hat)
-    tf.add_to_collection('accuracy', accuracy)
-    loss = calculate_loss(y, y_hat)
-    tf.add_to_collection('loss', loss)
-    # apply learning rate decay to test adam
     global_step = tf.Variable(0)
-    change_alpha = learning_rate_decay(alpha, decay_rate, global_step, 1)
-    train_op = create_Adam_op(loss, change_alpha, beta1, beta2, epsilon)
-    tf.add_to_collection('train_op', train_op)
+    alpha_d = learning_rate_decay(alpha, decay_rate, global_step, 1)
+
+    train_op = create_Adam_op(loss, alpha_d, beta1, beta2, epsilon)
+    tf.add_to_collection("train_op", train_op)
 
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
 
-    # initialize session and use mini batch gradient descent
     with tf.Session() as sess:
         sess.run(init)
-        train = {x: X_train, y: Y_train}
-        valid = {x: X_valid, y: Y_valid}
+
         m = X_train.shape[0]
         # mini batch definition
         if m % batch_size == 0:
-            complete_minibatches = m // batch_size
+            n_batches = m // batch_size
         else:
-            complete_minibatches = m // batch_size + 1
+            n_batches = m // batch_size + 1
 
+        # training loop
         for i in range(epochs + 1):
-            cost_t = sess.run(loss, feed_dict=train)
-            acc_t = sess.run(accuracy, feed_dict=train)
-            cost_v = sess.run(loss, feed_dict=valid)
-            acc_v = sess.run(accuracy, feed_dict=valid)
-
+            cost_train = sess.run(loss, feed_dict={x: X_train, y: Y_train})
+            accuracy_train = sess.run(accuracy,
+                                      feed_dict={x: X_train, y: Y_train})
+            cost_val = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+            accuracy_val = sess.run(accuracy,
+                                    feed_dict={x: X_valid, y: Y_valid})
             print("After {} epochs:".format(i))
-            print("\tTraining Cost: {}".format(cost_t))
-            print("\tTraining Accuracy: {}".format(acc_t))
-            print("\tValidation Cost: {}".format(cost_v))
-            print("\tValidation Accuracy: {}".format(acc_v))
+            print("\tTraining Cost: {}".format(cost_train))
+            print("\tTraining Accuracy: {}".format(accuracy_train))
+            print("\tValidation Cost: {}".format(cost_val))
+            print("\tValidation Accuracy: {}".format(accuracy_val))
 
-            if i < epochs:  # number of epochs to do
+            if i < epochs:
                 shuffled_X, shuffled_Y = shuffle_data(X_train, Y_train)
-                for k in range(complete_minibatches):  # mini batches
-                    start = k * batch_size  # ex: batch_size=10, start:0,10,20
-                    end = (k + 1) * batch_size  # same:10,20,30
-                    if end > m:  # end case, goes until m otherwise out range
+
+                # mini batches
+                for b in range(n_batches):
+                    start = b * batch_size
+                    end = (b + 1) * batch_size
+                    if end > m:
                         end = m
-                    mini_batch_X = shuffled_X[start:end]
-                    mini_batch_Y = shuffled_Y[start:end]
-                    new_train = {x: mini_batch_X, y: mini_batch_Y}
-                    sess.run(train_op, feed_dict=new_train)
-                    if (k + 1) % 100 == 0 and k != 0:
-                        mb_c, mb_a = sess.run([loss, accuracy], new_train)
-                        print("\tStep {}:".format(k + 1))
-                        print("\t\tCost: {}".format(mb_c))
-                        print("\t\tAccuracy: {}".format(mb_a))
+                    X_mini_batch = shuffled_X[start:end]
+                    Y_mini_batch = shuffled_Y[start:end]
+
+                    next_train = {x: X_mini_batch, y: Y_mini_batch}
+                    sess.run(train_op, feed_dict=next_train)
+
+                    if (b + 1) % 100 == 0 and b != 0:
+                        loss_mini_batch = sess.run(loss, feed_dict=next_train)
+                        acc_mini_batch = sess.run(accuracy,
+                                                  feed_dict=next_train)
+                        print("\tStep {}:".format(b + 1))
+                        print("\t\tCost: {}".format(loss_mini_batch))
+                        print("\t\tAccuracy: {}".format(acc_mini_batch))
+
+            # Update of global step variable for each iteration
             sess.run(tf.assign(global_step, global_step + 1))
+
         return saver.save(sess, save_path)
