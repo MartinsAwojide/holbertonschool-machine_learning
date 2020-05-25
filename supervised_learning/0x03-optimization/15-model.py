@@ -161,7 +161,7 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     # apply learning rate decay to test adam
     global_step = tf.Variable(0, trainable=False)
     change_alpha = tf.train.inverse_time_decay(alpha, global_step, decay_rate,
-                                               decay_rate, staircase=True)
+                                               1, staircase=True)
 
     train_op = tf.train.AdamOptimizer(change_alpha, beta1,
                                       beta2, epsilon).minimize(loss)
