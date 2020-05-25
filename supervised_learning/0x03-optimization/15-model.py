@@ -61,16 +61,15 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     :return: the prediction of the network in tensor form
     """
 
-    for i in range(len(layer_sizes)):
-        if i == 0:
-            yhat = create_batch_norm_layer(x, layer_sizes[i], activations[i])
-        elif i == len(layer_sizes) - 1:
-            yhat = create_layer(yhat, layer_sizes[i], activations[i])
+    prediction = create_batch_norm_layer(x, layer_sizes[0], activations[0])
+    for layer in range(1, len(layer_sizes)):
+        if layer != len(layer_sizes) - 1:
+            prediction = create_batch_norm_layer(prediction, layer_sizes[
+                layer], activations[layer])
         else:
-            yhat = create_batch_norm_layer(yhat, layer_sizes[i],
-                                           activations[i])
-
-    return yhat
+            prediction = create_layer(prediction, layer_sizes[layer],
+                                      activations[layer])
+    return prediction
 
 
 def calculate_accuracy(y, y_pred):
@@ -202,7 +201,7 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
         valid = {x: X_valid, y: Y_valid}
         complete_minibatches = m / batch_size
 
-        if complete_minibatches.is_integer() is True:
+        if m % batch_size == 0:
             complete_minibatches = int(complete_minibatches)
         else:
             complete_minibatches = (int(complete_minibatches) + 1)
