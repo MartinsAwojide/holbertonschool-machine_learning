@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """test"""
+import tensorflow.keras as K
 
 
 def test_model(network, data, labels, verbose=True):
