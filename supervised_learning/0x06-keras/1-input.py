@@ -19,6 +19,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     x = K.layers.Dense(layers[0], activation=activations[0],
                        kernel_regularizer=K.regularizers.l2(lambtha))(inputs)
     #  Pass inputs to the function x   =>    x = x(inputs)
+    outputs = x
     rate = 1 - keep_prob
     for i in range(1, len(layers)):
         if i == 1:
