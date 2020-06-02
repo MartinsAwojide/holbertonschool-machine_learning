@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""test"""
+"""testing a NN"""
 import tensorflow.keras as K
 
 
