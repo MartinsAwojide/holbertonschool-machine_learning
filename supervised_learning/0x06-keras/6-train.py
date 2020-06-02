@@ -25,10 +25,9 @@ def train_model(network, data, labels, batch_size, epochs,
     reproducibility, we have chosen to set the default to False.
     :return:
     """
+    early = []
     if early_stopping and validation_data:
-        early = [K.callbacks.EarlyStopping(patience=patience)]
-    else:
-        early = None
+        early.append(K.callbacks.EarlyStopping(patience=patience))
     history = network.fit(data, labels, epochs=epochs, batch_size=batch_size,
                           shuffle=shuffle, verbose=verbose, callbacks=early,
                           validation_data=validation_data)
