@@ -54,5 +54,6 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
         for width in range(conv_w):
             aux = img[:, height * stride_h:kernel_h + height * stride_h,
                       width * stride_w:kernel_w + width * stride_w]
-            convolution[:, height, width] = (np.sum(aux * kernel, axis=(1, 2, 3)))
+            convolution[:, height, width] = (np.sum(aux * kernel,
+                                                    axis=(1, 2, 3)))
     return convolution

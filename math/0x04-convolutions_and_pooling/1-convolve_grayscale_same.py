@@ -36,12 +36,10 @@ def convolve_grayscale_same(images, kernel):
     img = np.pad(images, ((0, 0), (padd_h, padd_h), (padd_w, padd_w)),
                  'constant', constant_values=0)
 
-    conv_h = image_h + 2 * padd_h - kernel_h + 1
-    conv_w = image_w + 2 * padd_w - kernel_w + 1
-    convolution = np.zeros((m, conv_h, conv_w))
+    convolution = np.zeros((m, image_h, image_w))
 
-    for height in range(conv_h):
-        for width in range(conv_w):
+    for height in range(image_h):
+        for width in range(image_w):
             aux = img[:, height:kernel_h + height, width:kernel_w + width]
             convolution[:, height, width] = (np.sum(aux * kernel, axis=(1, 2)))
     return convolution
