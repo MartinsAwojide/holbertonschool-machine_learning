@@ -44,17 +44,16 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         pad_w = int(np.ceil((((w_prev - 1) * sw + kw - w_prev) / 2)))
 
     # initialize the derivatives
-
-    dW = np.zeros_like(W)
+    dA_prev = np.zeros(A_prev.shape)
+    dW = np.zeros(W.shape)
     db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
     # padding
     A_pad = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w),
                             (0, 0)), 'constant', constant_values=0)
-    dA_pad = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w),
+    dA_pad = np.pad(dA_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w),
                              (0, 0)), 'constant', constant_values=0)
 
-    dA_prev = np.zeros_like(A_pad)
     for i in range(m):
         A_pad_prev = A_pad[i]
         dA_pad_prev = dA_pad[i]
