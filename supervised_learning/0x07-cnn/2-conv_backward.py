@@ -34,9 +34,9 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     Returns: the partial derivatives with respect to the previous
     layer (dA_prev), the kernels (dW), and the biases (db), respectively
     """
-    m, h_prev, w_prev, _ = A_prev.shape
-    _, h_new, w_new, c_new = dZ.shape
-    kh, kw, c_prev, _ = W.shape
+    m, h_prev, w_prev, c_prev = A_prev.shape
+    m, h_new, w_new, c_new = dZ.shape
+    kh, kw, c_prev, c_new = W.shape
     sh, sw = stride
     pad_h, pad_w = (0, 0)
     if padding == 'same':
@@ -46,7 +46,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # initialize the derivatives
     dA_prev = np.zeros(A_prev.shape)
     dW = np.zeros(W.shape)
-    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
+    db = np.zeros(b.shape)
 
     # padding
     A_pad = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w),
@@ -71,7 +71,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     db[:, :, :, c] += dZ[i, h, w, c]
         if padding == 'valid':
             dA_prev[i] = dA_pad_prev
-        else:
+        elif padding == 'same':
             # if pad = 1: star at 1 and end -1, only takes inside matrix
-            dA_prev[i] = dA_pad_prev[pad_h:-pad_h, pad_w:-pad_w, :]
-    return dA_pad, dW, db
+            dA_prev[i] = dA_pad_prev[pad_h:-pad_h, pad_w:-pad_w]
+    return dA_prev, dW, db
