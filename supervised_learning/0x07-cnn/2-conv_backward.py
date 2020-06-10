@@ -44,9 +44,9 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         pad_w = int(np.ceil((((w_prev - 1) * sw + kw - w_prev) / 2)))
 
     # initialize the derivatives
-    dA_prev = np.zeros(A_prev.shape)
-    dW = np.zeros(W.shape)
-    db = np.zeros(b.shape)
+
+    dW = np.zeros_like(W)
+    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
     # padding
     A_pad = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w),
@@ -54,6 +54,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     dA_pad = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w),
                              (0, 0)), 'constant', constant_values=0)
 
+    dA_prev = np.zeros_like(A_pad)
     for i in range(m):
         A_pad_prev = A_pad[i]
         dA_pad_prev = dA_pad[i]
@@ -68,10 +69,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     dA_pad_prev[st_h:en_h, st_w:en_w] += \
                         W[:, :, :, c] * dZ[i, h, w, c]
                     dW[:, :, :, c] += X * dZ[i, h, w, c]
-                    db[:, :, :, c] += dZ[i, h, w, c]
+
         if padding == 'valid':
             dA_prev[i, :, :, :] += dA_pad_prev
         elif padding == 'same':
             # if pad = 1: star at 1 and end -1, only takes inside matrix
-            dA_prev[i, :, :, :] += dA_pad_prev[pad_h:-pad_h, pad_w:-pad_w]
+            dA_prev[i, :, :, :] += dA_pad_prev[:, pad_h:-pad_h, pad_w:-pad_w]
     return dA_prev, dW, db
