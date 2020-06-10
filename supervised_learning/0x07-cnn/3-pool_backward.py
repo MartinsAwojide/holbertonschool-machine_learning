@@ -44,15 +44,18 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                     en_h = h * sh + kh
                     st_w = w * sw
                     en_w = w * sw + kw
-                    X = A_prev[i, st_h:en_h, st_w:en_w, c]
+
                     if mode == 'max':
                         # mask with 1 on max and 0 otherwise
+                        X = A_prev[i, st_h:en_h, st_w:en_w, c]
                         mask = (np.max(X) == X).astype(int)
+                        # da is prev da mul by mask to generate more dimensions
+                        # than the da.
+                        dA_prev[i, st_h:en_h, st_w:en_w, c] += \
+                            dA[i, h, w, c] * mask
                     elif mode == 'avg':
                         # if 4 number mean = 3, 3*1 added 4 times is 12 / 4 = 3
-                        mask = np.identity(X.shape)
-                    # da is prev da mul by mask to generate more dimensions
-                    # than the da.
-                    dA_prev[i, st_h:en_h, st_w:en_w, c] +=\
-                        dA[i, h, w, c] * mask
+                        average = dA[i, h, w, c] / (kh * kw)
+                        one = np.ones(kernel_shape) * average
+                        dA_prev[i, st_h:en_h, st_w:en_w, c] += one
     return dA_prev
