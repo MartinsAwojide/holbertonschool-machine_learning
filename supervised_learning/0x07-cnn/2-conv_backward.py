@@ -64,14 +64,14 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     en_h = h * sh + kh
                     st_w = w * sw
                     en_w = w * sw + kw
-                    X = A_pad_prev[st_h:en_h, st_w:en_w]
+                    X = A_pad_prev[st_h:en_h, st_w:en_w, :]
                     dA_pad_prev[st_h:en_h, st_w:en_w] += \
                         W[:, :, :, c] * dZ[i, h, w, c]
                     dW[:, :, :, c] += X * dZ[i, h, w, c]
                     db[:, :, :, c] += dZ[i, h, w, c]
         if padding == 'valid':
-            dA_prev[i] += dA_pad_prev
+            dA_prev[i, :, :, :] += dA_pad_prev
         elif padding == 'same':
             # if pad = 1: star at 1 and end -1, only takes inside matrix
-            dA_prev[i] += dA_pad_prev[pad_h:-pad_h, pad_w:-pad_w]
+            dA_prev[i, :, :, :] += dA_pad_prev[pad_h:-pad_h, pad_w:-pad_w]
     return dA_prev, dW, db
