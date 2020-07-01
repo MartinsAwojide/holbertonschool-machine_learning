@@ -85,8 +85,10 @@ class Yolo:
             tw = (output[..., 2])
             th = (output[..., 3])
 
-            pw = self.anchors[i, :, 0]
-            ph = self.anchors[i, :, 1]
+            pw = self.anchors[:, :, 0]
+            pw_new = pw[i].reshape(1, 1, len(pw[i]))
+            ph = self.anchors[:, :, 1]
+            ph_new = ph[i].reshape(1, 1, len(ph[i]))
 
             # normalize
             tx_n = self.sigmoid(tx)
@@ -104,8 +106,8 @@ class Yolo:
             # boxes prediction
             bx = tx_n + cx
             by = ty_n + cy
-            bw = np.exp(tw) * pw
-            bh = np.exp(th) * ph
+            bw = np.exp(tw) * pw_new
+            bh = np.exp(th) * ph_new
 
             # normalize
             bx /= grid_w
