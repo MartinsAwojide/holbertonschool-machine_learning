@@ -80,15 +80,13 @@ class Yolo:
             grid_h, grid_w, n_anchor, _ = outputs[i].shape
             box = np.zeros((grid_h, grid_w, n_anchor, 4))
             # get coordinates, width height of the outputs
-            tx = (output[..., 0])
-            ty = (output[..., 1])
-            tw = (output[..., 2])
-            th = (output[..., 3])
+            tx = (output[:, :, :, 0])
+            ty = (output[:, :, :, 1])
+            tw = (output[:, :, :, 2])
+            th = (output[:, :, :, 3])
 
-            pw = self.anchors[:, :, 0]
-            pw_new = pw[i].reshape(1, 1, len(pw[i]))
-            ph = self.anchors[:, :, 1]
-            ph_new = ph[i].reshape(1, 1, len(ph[i]))
+            pw = self.anchors[i, :, 0]
+            ph = self.anchors[i, :, 1]
 
             # normalize
             tx_n = self.sigmoid(tx)
@@ -106,14 +104,14 @@ class Yolo:
             # boxes prediction
             bx = tx_n + cx
             by = ty_n + cy
-            bw = np.exp(tw) * pw_new
-            bh = np.exp(th) * ph_new
+            bw = np.exp(tw) * pw
+            bh = np.exp(th) * ph
 
             # normalize
             bx /= grid_w
             by /= grid_h
             bw /= self.model.input.shape[1].value
-            bh /= self.model.input.shape[1].value
+            bh /= self.model.input.shape[2].value
 
             # bounding box coordinates respect image. top left corner (x1, y1)
             # and bottom right corner (x2, y2)
@@ -121,10 +119,10 @@ class Yolo:
             y1 = (by - (bh / 2)) * image_h
             x2 = (bx + (bw / 2)) * image_w
             y2 = (by + (bh / 2)) * image_h
-            box[..., 0] = x1
-            box[..., 1] = y1
-            box[..., 2] = x2
-            box[..., 3] = y2
+            box[:, :, :, 0] = x1
+            box[:, :, :, 1] = y1
+            box[:, :, :, 2] = x2
+            box[:, :, :, 3] = y2
             boxes.append(box)
 
             aux = output[:, :, :, 4]
