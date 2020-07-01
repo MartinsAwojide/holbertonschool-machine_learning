@@ -96,8 +96,9 @@ class Yolo:
             cx = np.tile(np.arange(0, grid_w), grid_h)
             cx = cx.reshape(grid_w, grid_w, 1)
 
-            cy = np.tile(np.arange(0, grid_w), grid_h).T
+            cy = np.tile(np.arange(0, grid_w), grid_h)
             # y doesn't change until x finish so .T
+            cy = cy.reshape(grid_h, grid_h).T
             cy = cy.reshape(grid_h, grid_h, 1)
 
             # boxes prediction
