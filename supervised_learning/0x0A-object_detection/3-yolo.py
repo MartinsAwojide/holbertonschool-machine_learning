@@ -216,16 +216,63 @@ class Yolo:
 
         return iou
 
-    def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
+    def nms(self, filter, thresh, scores):
         """
-        non max suppression
+        Calculate remain boxes
         Args:
-            filtered_boxes:
-            box_classes:
-            box_scores:
+            filter: the filtered bounding boxes
+            thresh: the threshold
+            scores: the scores
 
         Returns:
+        a list containin the remaining boxes best iou and lest threshold
+        """
+        x1 = filter[:, 0]
+        y1 = filter[:, 1]
+        x2 = filter[:, 2]
+        y2 = filter[:, 3]
 
+        areas = (x2 - x1 + 1) * (y2 - y1 + 1)
+        order = scores.argsort()[::-1]
+
+        keep = []
+        while order.size > 0:
+            i = order[0]
+            keep.append(i)
+            xx1 = np.maximum(x1[i], x1[order[1:]])
+            yy1 = np.maximum(y1[i], y1[order[1:]])
+            xx2 = np.minimum(x2[i], x2[order[1:]])
+            yy2 = np.minimum(y2[i], y2[order[1:]])
+
+            w = np.maximum(0.0, xx2 - xx1 + 1)
+            h = np.maximum(0.0, yy2 - yy1 + 1)
+            inter = w * h
+            ovr = inter / (areas[i] + areas[order[1:]] - inter)
+
+            indx = np.where(ovr <= thresh)[0]
+            order = order[indx + 1]
+
+        return keep
+
+    def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
+        """
+        Non max suppression
+        Args:
+            filtered_boxes: a numpy.ndarray of shape (?, 4) containing
+            all of the filtered bounding boxes:
+            box_classes: a numpy.ndarray of shape (?,) containing the class
+            number for the class that filtered_boxes predicts, respectively
+            box_scores: a numpy.ndarray of shape (?) containing the box
+            scores for each box in filtered_boxes, respectively
+
+        Returns: tuple of:
+        (box_predictions, predicted_box_classes, predicted_box_scores):
+        - box_predictions: a numpy.ndarray of shape (?, 4) containing all
+        of the predicted bounding boxes ordered by class and box score
+        - predicted_box_classes: a numpy.ndarray of shape (?,) containing
+        the class number for box_predictions ordered by class and box score
+        - predicted_box_scores: a numpy.ndarray of shape (?) containing
+        the box scores for box_predictions ordered by class and box score
         """
         all_classes = []
         all_scores = []
@@ -249,41 +296,3 @@ class Yolo:
         all_classes = np.concatenate(all_classes, axis=0)
         all_scores = np.concatenate(all_scores, axis=0)
         return all_filters, all_classes, all_scores
-
-    def nms(self, dets, thresh, scores):
-        """
-
-        Args:
-            dets:
-            thresh:
-            scores:
-
-        Returns:
-
-        """
-        x1 = dets[:, 0]
-        y1 = dets[:, 1]
-        x2 = dets[:, 2]
-        y2 = dets[:, 3]
-
-        areas = (x2 - x1 + 1) * (y2 - y1 + 1)
-        order = scores.argsort()[::-1]
-
-        keep = []
-        while order.size > 0:
-            i = order[0]
-            keep.append(i)
-            xx1 = np.maximum(x1[i], x1[order[1:]])
-            yy1 = np.maximum(y1[i], y1[order[1:]])
-            xx2 = np.minimum(x2[i], x2[order[1:]])
-            yy2 = np.minimum(y2[i], y2[order[1:]])
-
-            w = np.maximum(0.0, xx2 - xx1 + 1)
-            h = np.maximum(0.0, yy2 - yy1 + 1)
-            inter = w * h
-            ovr = inter / (areas[i] + areas[order[1:]] - inter)
-
-            inds = np.where(ovr <= thresh)[0]
-            order = order[inds + 1]
-
-        return keep
