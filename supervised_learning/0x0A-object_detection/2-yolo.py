@@ -136,6 +136,27 @@ class Yolo:
         return boxes, confidence_boxes, prop_boxes
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
+        """
+        Select higher probability
+        Args:
+            boxes: boxes: a list of numpy.ndarrays of shape
+            (grid_height, grid_width, anchor_boxes, 4)
+            containing processed boundary boxes for each output, respectively
+            box_confidences: a list of numpy.ndarrays of shape
+            (grid_height, grid_width, anchor_boxes, 1) containing
+            the processed box confidences for each output, respectively
+            box_class_probs: a list of numpy.ndarrays of shape
+            (grid_height, grid_width, anchor_boxes, classes) containing
+            the processed box class probabilities for each output, respectively
+
+        Returns: a tuple of (filtered_boxes, box_classes, box_scores)
+        filtered_boxes: a numpy.ndarray of shape (?, 4)
+        containing all of the filtered bounding boxes:
+        - box_classes: a numpy.ndarray of shape (?,) containing the class
+        number that each box in filtered_boxes predicts, respectively
+        - box_scores: a numpy.ndarray of shape (?) containing the box scores
+        for each box in filtered_boxes, respectively
+        """
 
         multiply = []
         # take one of each and multiply
