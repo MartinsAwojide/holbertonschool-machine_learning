@@ -30,8 +30,11 @@ class Yolo:
 
         with open(classes_path, "r") as fd:
             classes = fd.read()
+            classes = classes.split('\n')
+            if len(classes[-1]) == 0:
+                classes = classes[:-1]
 
-        self.class_names = classes.split()
+        self.class_names = classes
         self.class_t = class_t
         self.nms_t = nms_t
         self.anchors = anchors
