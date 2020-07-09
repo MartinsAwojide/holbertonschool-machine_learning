@@ -59,7 +59,6 @@ class FaceAlign:
         """
         try:
             shape = self.shape_predictor(image, detection)
-            print(shape)
             coords = np.zeros((shape.num_parts, 2), dtype="int")
             # dlib.num_parts
             for i in range(0, shape.num_parts):
