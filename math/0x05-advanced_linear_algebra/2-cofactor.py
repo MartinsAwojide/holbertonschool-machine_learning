@@ -54,14 +54,17 @@ def cofactor(matrix):
     if type(matrix) is not list or len(matrix) == 0:
         raise TypeError("matrix must be a list of lists")
 
-    if len(matrix) == 1:
-        return [[1]]
+    if matrix == [[]]:
+        raise ValueError("matrix must be a non-empty square matrix")
 
     for i in range(len(matrix)):
         if type(matrix[i]) is not list:
             raise TypeError("matrix must be a list of lists")
         if len(matrix) != len(matrix[i]) or len(matrix[i]) == 0:
             raise ValueError("matrix must be a non-empty square matrix")
+
+    if len(matrix) == 1:
+        return [[1]]
 
     new_matrix = []
     for i in range(len(matrix)):
