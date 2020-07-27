@@ -16,14 +16,16 @@ def correlation(C):
     d = C.shape[0]
     if type(C) != np.ndarray:
         raise TypeError("C must be a numpy.ndarray")
-    if C.shape != (d, d):
+    if len(C.shape) != 2 or C.shape[0] != C.shape[1]:
         raise ValueError("C must be a 2D square matrix")
 
-    variance = np.sqrt(np.diag(C))
+    std = np.sqrt(np.diag(C))
+
     # u = (u1, u2, ... um), v = (v1, v2, ... vn)
     # their outer product u ⊗ v is defined as the m × n matrix A
     # obtained by multiplying each element of u by each element of v
-    outer_product = np.outer(variance, variance)
+    outer_product = np.outer(std, std)
+
     correlation = C / outer_product
 
     return correlation
