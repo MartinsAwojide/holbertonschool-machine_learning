@@ -40,7 +40,7 @@ class MultiNormal():
 
         det = np.linalg.det(self.cov)
         inv = np.linalg.inv(self.cov)
-        part1 = 1 / np.sqrt(((2 * np.pi) ** d) * det)
+        part1 = 1 / ((2 * np.pi)**(d/2) * np.sqrt(det))
         part2 = np.dot((x-self.mean).T, inv)
         part3 = np.dot(part2, (x - self.mean) / -2)
         pdf = part1 * np.exp(part3)
