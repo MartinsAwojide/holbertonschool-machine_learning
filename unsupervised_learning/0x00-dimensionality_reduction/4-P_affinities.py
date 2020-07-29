@@ -21,7 +21,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     Returns:
     P, a numpy.ndarray of shape (n, n) containing the symmetric P affinities
     """
-    (n, d) = X.shape
+    n, _ = X.shape
     D, P, betas, H = P_init(X, perplexity)
     for i in range(n):
         copy = D[i].copy()
@@ -45,7 +45,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
                 else:
                     betas[i, 0] = (betas[i, 0] + betamin) / 2
             # Recompute the values
-            (Hi, Pi) = HP(copy, betas[i, 0])
+            Hi, Pi = HP(copy, betas[i, 0])
             Hdiff = Hi - H
         # Set the final row of P, reinserting the missing spot as 0
         aux = np.insert(Pi, i, 0)
