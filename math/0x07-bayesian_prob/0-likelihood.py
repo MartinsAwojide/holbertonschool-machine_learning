@@ -15,9 +15,9 @@ def likelihood(x, n, P):
     a 1D numpy.ndarray containing the likelihood of obtaining the data,
     x and n, for each probability in P, respectively
     """
-    if not(n > 0 and type(n) is int):
+    if not(type(n) is int) or n <= 0:
         raise ValueError("n must be a positive integer")
-    if not(n >= 0 and type(n) is int):
+    if not(type(x) is int) or x < 0:
         msg = "x must be an integer that is greater than or equal to 0"
         raise ValueError(msg)
     if x > n:
