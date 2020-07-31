@@ -45,9 +45,10 @@ def intersection(x, n, P, Pr):
 
     return like * Pr
 
+
 def marginal(x, n, P, Pr):
     """
-
+    Calculates the marginal probability of obtaining the data
     Args:
         x: is the number of patients that develop severe side effects
         n: is the total number of patients observed
