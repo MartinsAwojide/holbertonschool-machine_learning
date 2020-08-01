@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Calculates the posterior probability of a uniform distribution"""
-from scipy import math, special, stats
-import numpy as np
+from scipy import special
 
 
 def posterior(x, n, p1, p2):
@@ -29,14 +28,11 @@ def posterior(x, n, p1, p2):
     if p2 <= p1:
         raise ValueError("p2 must be greater than p1")
 
-    P = (x * (p1 + p2)) / (n * (p1 + p2))
-    num = (special.factorial(n) / (special.factorial(x) *
-                                   special.factorial(n - x))) * (P ** x) * \
-          ((1 - P) ** (n - x))
+    # Uniform prior + binomial likelihood => Beta posterior
+    # Beta(x + 1, n - x + 1)
+    beta1 = special.btdtr(x + 1, n - x + 1, p1)
+    beta2 = special.btdtr(x + 1, n - x + 1, p2)
 
-    Pr = 1
-    intersection = num * Pr
-
-    pos = intersection / np.sum(intersection)
+    pos = beta2 - beta1
 
     return pos
