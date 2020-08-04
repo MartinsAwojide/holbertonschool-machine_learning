@@ -13,6 +13,13 @@ def variance(X, C):
 
     Returns: var, or None on failure. var is the total variance
     """
+    if type(X) is not np.ndarray or len(X.shape) != 2:
+        return None
+    if type(C) is not np.ndarray or len(C.shape) != 2:
+        return None
+    if X.shape[1] != C.shape[1]:
+        return None
+
     distances = np.square(X - C[:, np.newaxis]).sum(axis=2)
     min_distances = np.min(distances, axis=0)
     var = np.sum(min_distances)
