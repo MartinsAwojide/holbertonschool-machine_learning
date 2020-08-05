@@ -32,6 +32,7 @@ def pdf(X, m, S):
 
     det = np.linalg.det(S)
     inv = np.linalg.inv(S)
+    # Multivariate normal distribution
     # Non-degenerate case formula
     den = 1 / np.sqrt((2 * np.pi) ** d * det)
     part1 = np.matmul((-(X - m) / 2), inv)
