@@ -27,6 +27,11 @@ def maximization(X, g):
     if X.shape[0] != g.shape[1]:
         return None, None, None
 
+    posterior = np.sum(g, axis=0)
+    posterior = np.sum(posterior)
+    if (int(posterior) != X.shape[0]):
+        return (None, None, None)
+
     n, d = X.shape
     k, _ = g.shape
 
