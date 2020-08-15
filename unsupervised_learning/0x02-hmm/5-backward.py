@@ -34,21 +34,23 @@ def backward(Observation, Emission, Transition, Initial):
         return None, None
     if type(Emission) is not np.ndarray or len(Emission.shape) != 2:
         return None, None
-    if not (np.sum(Emission, axis=1) == 1.).all():
-        return None, None
     if type(Transition) is not np.ndarray or len(Transition.shape) != 2:
         return None, None
-    if not (np.sum(Transition, axis=1) == 1.).all():
+    if type(Initial) is not np.ndarray or len(Initial.shape) != 2:
         return None, None
+
+    if not (np.sum(Emission, axis=1) == 1.0).all():
+        return None, None
+    if not (np.sum(Transition, axis=1) == 1.0).all():
+        return None, None
+    if not (np.sum(Initial, axis=0) == 1.0).all():
+        return None, None
+
     if Transition.shape[0] != Initial.shape[0]:
         return None, None
     if Transition.shape[0] != Emission.shape[0]:
         return None, None
     if Transition.shape[0] != Transition.shape[1]:
-        return None, None
-    if type(Initial) is not np.ndarray or len(Initial.shape) != 2:
-        return None, None
-    if not np.sum(Initial) == 1:
         return None, None
     N, M = Emission.shape
     T = Observation.shape[0]
