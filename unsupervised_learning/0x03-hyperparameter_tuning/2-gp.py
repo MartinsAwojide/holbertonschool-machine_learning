@@ -54,7 +54,7 @@ class GaussianProcess:
         - sigma is a numpy.ndarray of shape (s,) containing the standard
         deviation for each point in X_s, respectively
         """
-        K = self.kernel(self.X, self.X)
+        K = self.K
         K_s = self.kernel(self.X, X_s)
         K_ss = self.kernel(X_s, X_s)
         K_inv = np.linalg.inv(K)
@@ -79,4 +79,4 @@ class GaussianProcess:
         """
         self.X = np.append(self.X, X_new).reshape(-1, 1)
         self.Y = np.append(self.Y, Y_new).reshape(-1, 1)
-        self.K = self.kernel(self.X, self.Y)
+        self.K = self.kernel(self.X, self.X)
