@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Noiseless 1D Gaussian process"""
 import numpy as np
 
 
-class GaussianProcess():
+class GaussianProcess:
     """Represents a noiseless 1D Gaussian process"""
 
     def __init__(self, X_init, Y_init, l=1, sigma_f=1):
@@ -23,7 +23,7 @@ class GaussianProcess():
         self.Y = Y_init
         self.l = l
         self.sigma_f = sigma_f
-        self.K = self.kernel(self.X, self.X)
+        self.K = self.kernel(X_init, X_init)
 
     def kernel(self, X1, X2):
         """

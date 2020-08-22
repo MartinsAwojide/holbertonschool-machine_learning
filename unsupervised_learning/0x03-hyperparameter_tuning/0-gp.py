@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Noiseless 1D Gaussian process"""
 import numpy as np
 
