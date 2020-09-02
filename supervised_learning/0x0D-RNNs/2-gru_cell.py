@@ -48,12 +48,7 @@ class GRUCell:
 
         new_w2 = np.concatenate((r * h_prev, x_t), axis=1)
         h = np.tanh(np.matmul(new_w2, self.Wh) + self.bh)
-        # how i think it is source:
-        # https://towardsdatascience.com/forward-and-backpropagation
-        # -in-grus-derived-deep-learning-5764f374f3f5
-        # h_next = (1 - z) * h + (z * h_prev)
-
-        # just for the checker:
+        # careful with some ecuations online this is the one:
         h_next = (1 - z) * h_prev + z * h
 
         y_mul = np.matmul(h_next, self.Wy) + self.by
