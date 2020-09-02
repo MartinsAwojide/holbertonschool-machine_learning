@@ -21,9 +21,10 @@ def rnn(rnn_cell, X, h_0):
     """
     t, m, i = X.shape
     _, h = h_0.shape
+    o = rnn_cell.Wy.shape[-1]
     h_prev = h_0
     H = np.zeros((t+1, m, h))
-    Y = np.zeros((t, m, rnn_cell.Wy.shape[-1]))
+    Y = np.zeros((t, m, o))
     H[0] = h_0
     for i in range(t):
         x_t = X[i]
