@@ -7,11 +7,13 @@ preprocess = __import__('preprocess_data').preprocess
 
 # ************************************** UNIVARIATE FUNCTIONS ************
 def create_time_steps(length):
+    """steps"""
     return list(range(-length, 0))
 
 
 def univariate_data(dataset, start_index, end_index,
                     history_size, target_size):
+    """univariate data"""
     data = []
     labels = []
 
@@ -30,6 +32,7 @@ def univariate_data(dataset, start_index, end_index,
 
 
 def show_plot(plot_data, delta, title):
+    """plotting"""
     labels = ['History', 'True Future', 'Model Prediction']
     marker = ['.-', 'rx', 'go']
     time_steps = create_time_steps(plot_data[0].shape[0])
