@@ -21,11 +21,39 @@ Solve the next summation:
 
 ![\sum_{i=2}^{5} i](https://render.githubusercontent.com/render/math?math=%5Csum_%7Bi%3D2%7D%5E%7B5%7D%20i)
 
+**1.** 3 + 4 + 5
+
+**2.** 3 + 4
+
+**3.** 2 + 3 + 4 + 5
+
+**4.** 2 + 3 + 4
+
+**Repo:**
+
+* GitHub repository: holbertonschool-machine_learning
+* Directory: math/0x02-calculus
+* File: [`0-sigma_is_for_sum`](./0-sigma_is_for_sum)
+
 ### 1. It's actually pronounced sEEgma
 
 Solve the next summation:
 
 ![\sum_{k=1}^{4} 9i - 2k](https://render.githubusercontent.com/render/math?math=%5Csum_%7Bk%3D1%7D%5E%7B4%7D%209i%20-%202k)   
+
+**1.** 90 - 20
+
+**2.** 36i - 20
+
+**3.** 90 - 8k
+
+**4.** 36i - 8k
+
+**Repo:**
+
+* GitHub repository: holbertonschool-machine_learning
+* Directory: math/0x02-calculus
+* File: [`1-seegma`](1-seegma)
 
 ### 2. Pi is for Product
 
@@ -33,17 +61,53 @@ Solve the next repeated multiplication:
 
 ![\prod_{i=1}^{m} i](https://render.githubusercontent.com/render/math?math=%5Cprod_%7Bi%3D1%7D%5E%7Bm%7D%20i)
 
+**1.** (m - 1)!
+
+**2.** 0
+
+**3.** (m + 1)!
+
+**4.** m!
+
+**Repo:**
+
+* GitHub repository: holbertonschool-machine_learning
+* Directory: math/0x02-calculus
+* File: [`2-pi_is_for_product`](2-pi_is_for_product)
+
 ### 3. It's actually pronounced pEE
 
 Solve the next repeated multiplication:
 
 ![\prod_{i=0}^{10} i](https://render.githubusercontent.com/render/math?math=%5Cprod_%7Bi%3D0%7D%5E%7B10%7D%20i)
 
+**1.** 10!
+
+**2.** 9!
+
+**3.** 100
+
+**4.** 0
+
+**Repo:**
+
+* GitHub repository: holbertonschool-machine_learning
+* Directory: math/0x02-calculus
+* File: [3-pee](./3-pee)
+
 ### 4. Hello, derivatives!
 
 Found  ![\frac{dy}{dx}](https://render.githubusercontent.com/render/math?math=%5Cfrac%7Bdy%7D%7Bdx%7D), where:
 
 ![y = x^{4} + 3x^{3} - 5x + 1](https://render.githubusercontent.com/render/math?math=y%20%3D%20x%5E%7B4%7D%20%2B%203x%5E%7B3%7D%20-%205x%20%2B%201)
+
+**1.** ![3x^{3} + 6x^{2} - 4](https://render.githubusercontent.com/render/math?math=3x^{3}+6x^{2}-4)
+
+**2.** ![4x^{3} + 6x^{2} - 5](https://render.githubusercontent.com/render/math?math=4x^{3}+6x^{2}-5)
+
+**3.** ![4x^{3} + 9x^{2} - 5](https://render.githubusercontent.com/render/math?math=4x^{3}+9x^{2}-5)
+
+**4.** ![4x^{3} + 9x^{2} - 4](https://render.githubusercontent.com/render/math?math=4x^{3}+9x^{2}-4)
 
 ### 5. A log on the fire
 
