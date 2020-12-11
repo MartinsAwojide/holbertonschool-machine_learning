@@ -12,11 +12,18 @@
 ## Resources
 
 **Read or watch**:
-
+*   [Bayesian probability](https://en.wikipedia.org/wiki/Bayesian_probability)
+*   [Bayesian statistics](https://en.wikipedia.org/wiki/Bayesian_statistics)
 *   [Bayes’ Theorem - The Simplest Case](https://www.youtube.com/watch?v=XQoLVl31ZfQ "Bayes' Theorem - The Simplest Case")
 *   [A visual guide to Bayesian thinking](https://www.youtube.com/watch?v=BrK7X_XlGB8 "A visual guide to Bayesian thinking")
 *   [Base Rates](http://onlinestatbook.com/2/probability/base_rates.html "Base Rates")
 *   [Bayesian statistics: a comprehensive course](https://www.youtube.com/playlist?list=PLFDbGp5YzjqXQ4oE4w9GVWdiokWB9gEpm "Bayesian statistics: a comprehensive course")
+    - [Bayes’ rule - an intuitive explanation](https://www.youtube.com/watch?v=EbyUsf_jUjk&list=PLFDbGp5YzjqXQ4oE4w9GVWdiokWB9gEpm&index=14&ab_channel=Oxeduc)
+    - [Bayes’ rule in statistics](https://www.youtube.com/watch?v=i567qvWejJA&list=PLFDbGp5YzjqXQ4oE4w9GVWdiokWB9gEpm&index=15&ab_channel=Oxeduc)
+    - [Bayes’ rule in inference - likelihood](https://www.youtube.com/watch?v=c69a_viMRQU&list=PLFDbGp5YzjqXQ4oE4w9GVWdiokWB9gEpm&index=16&ab_channel=Oxeduc)
+    - [Bayes’ rule in inference - the prior and denominator](https://www.youtube.com/watch?v=a5QDDZLGSXY&list=PLFDbGp5YzjqXQ4oE4w9GVWdiokWB9gEpm&index=17&ab_channel=Oxeduc)
+    - [Bayes’ rule denominator: discrete and continuous](https://www.youtube.com/watch?v=QEzeLh6L9Tg&list=PLFDbGp5YzjqXQ4oE4w9GVWdiokWB9gEpm&index=24&ab_channel=Oxeduc)
+    - [Bayes’ rule: why likelihood is not a probability](https://www.youtube.com/watch?v=sm60vapz2jQ&list=PLFDbGp5YzjqXQ4oE4w9GVWdiokWB9gEpm&index=25&ab_channel=Oxeduc)
 
 
 ## Quiz questions
@@ -34,7 +41,7 @@ What is `P(A | B)`?
 
 * [ ] Marginal probability
 
-* [ ] Posterior probability
+* [x] Posterior probability
 
 * [ ] Prior probability
 
@@ -44,7 +51,7 @@ Bayes’ rule states that `P(A | B) = P(B | A) * P(A) / P(B)`
 
 What is `P(B | A)`?
 
-* [ ] Likelihood
+* [x] Likelihood
 
 * [ ] Marginal probability
 
@@ -64,7 +71,7 @@ What is `P(A)`?
 
 * [ ] Posterior probability
 
-* [ ] Prior probability
+* [x] Prior probability
 
 ### Question #3
 
@@ -74,7 +81,7 @@ What is `P(B)`?
 
 * [ ] Likelihood
 
-* [ ] Marginal probability
+* [x] Marginal probability
 
 * [ ] Posterior probability
 
