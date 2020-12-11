@@ -12,6 +12,43 @@
 *   What is the difference between linear and non-linear dimensionality reduction?
 *   Which techniques are linear/non-linear?
 
+## Resources
+
+**Read or watch**:
+
+- [Dimensionality Reduction For Dummies — Part 1: Intuition](https://towardsdatascience.com/https-medium-com-abdullatif-h-dimensionality-reduction-for-dummies-part-1-a8c9ec7b7e79)
+- [Singular Value Decomposition](https://www.youtube.com/watch?v=P5mlg91as1c&ab_channel=ArtificialIntelligence-AllinOne)
+- [Understanding SVD (Singular Value Decomposition)](https://towardsdatascience.com/svd-8c2f72e264f)
+- [Intuitively, what is the difference between Eigendecomposition and Singular Value Decomposition?](https://math.stackexchange.com/questions/320220/intuitively-what-is-the-difference-between-eigendecomposition-and-singular-valu)
+- [Dimensionality Reduction: Principal Components Analysis, Part 1](https://www.youtube.com/watch?v=ZqXnPcyIAL8&ab_channel=Data4Bio)
+- [Dimensionality Reduction: Principal Components Analysis, Part 2](https://www.youtube.com/watch?v=NUn6WeFM5cM&ab_channel=Data4Bio)
+- [StatQuest: t-SNE, Clearly Explained](https://www.youtube.com/watch?v=NEaUSP4YerM&ab_channel=StatQuestwithJoshStarmer)
+- [t-SNE tutorial Part1](https://www.youtube.com/watch?v=ohQXphVSEQM&ab_channel=DivyKangeyan)
+- [t-SNE tutorial Part2](https://www.youtube.com/watch?v=W-9L6v_rFIE&ab_channel=DivyKangeyan)
+- [How to Use t-SNE Effectively](https://distill.pub/2016/misread-tsne/)
+
+**Definitions to skim:**
+
+- [Dimensionality Reduction](https://en.wikipedia.org/wiki/Dimensionality_reduction)
+- [Principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)
+- [Eigendecomposition of a matrix](https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix)
+- [Singular value decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition)
+- [Manifold check this out if you have never heard this term before](https://en.wikipedia.org/wiki/Manifold)
+- [Kullback–Leibler divergence](https://en.wikipedia.org/wiki/Relative_entropy)
+- [T-distributed stochastic neighbor embedding](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding)
+
+**As references:**
+
+- [numpy.cumsum](https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.cumsum.html)
+- [Visualizing Data using t-SNE](https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf) (paper)
+- [Visualizing Data Using t-SNE](https://www.youtube.com/watch?v=RJVL80Gg3lA&ab_channel=GoogleTechTalks) (video)
+
+**Advanced:**
+
+- [Kernel principal component analysis](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis)
+- [Nonlinear Dimensionality Reduction: KPCA](https://www.youtube.com/watch?v=HbDHohXPLnU&ab_channel=caltech)
+
+
 ## Requirements
 
 ### General
@@ -29,6 +66,20 @@
 *   Unless otherwise noted, you are not allowed to import any module except `import numpy as np`
 *   All your files must be executable
 
+
+### Watch Out!
+Just like lists, np.ndarrays are mutable objects:
+
+```
+>>> vector = np.ones((100, 1))
+>>> m1 = vector[55]
+>>> m2 = vector[55, 0]
+>>> vector[55] = 2
+>>> m1
+array([2.])
+>>> m2
+1.0
+```
 
 ## Tasks
 
