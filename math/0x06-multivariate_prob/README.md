@@ -29,6 +29,31 @@
 -   All your files must be executable
 -   The length of your files will be tested using `wc`
 
+## Resources
+
+**Read or watch**:
+
+- [Joint Probability Distributions](http://homepage.stat.uiowa.edu/~rdecook/stat2020/notes/ch5_pt1.pdf)
+- [Multivariate Gaussian distributions](https://www.youtube.com/watch?v=eho8xH3E6mE&ab_channel=AlexanderIhler)
+- [The Multivariate Gaussian Distribution](http://cs229.stanford.edu/section/gaussians.pdf)
+- [An Introduction to Variance, Covariance & Correlation](https://www.alchemer.com/resources/blog/variance-covariance-correlation/)
+- [Variance-covariance matrix using matrix notation of factor analysis](https://www.youtube.com/watch?v=G16c2ZODcg8&ab_channel=BenLambert)
+
+**Definitions to skim:**
+
+- [Carl Friedrich Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss)
+- [Joint probability distribution](https://en.wikipedia.org/wiki/Joint_probability_distribution)
+- [Covariance](https://en.wikipedia.org/wiki/Covariance)
+- [Covariance matrix](https://en.wikipedia.org/wiki/Covariance_matrix)
+
+**As references:**
+
+- [numpy.cov](https://numpy.org/doc/stable/reference/generated/numpy.cov.html)
+- [numpy.corrcoef](https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html)
+- [numpy.linalg.det](https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html)
+- [numpy.linalg.inv](https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html)
+- [numpy.random.multivariate_normal](https://docs.scipy.org/doc/numpy-1.15.0/reference/generated/numpy.random.multivariate_normal.html)
+
 ---
 
 ## Quiz questions
@@ -44,13 +69,13 @@ p<sub>x, y</sub>(x, y) =
 
 - [ ] P(X = x | Y = y)
 
-- [ ] P(X = x | Y = y)P(Y = y)
+- [x] P(X = x | Y = y)P(Y = y)
 
 - [ ] P(Y = y | X = x)
 
-- [ ] P(Y = y | X = x)P(X = x)
+- [x] P(Y = y | X = x)P(X = x)
 
-- [ ] P(X = x ∩ Y = y)
+- [x] P(X = x ∩ Y = y)
 
 - [ ] P(X = x ∪ Y = y)
 
@@ -60,11 +85,11 @@ The `i,j`<sup>th</sup> entry in the covariance matrix is
 
 - [ ] the variance of variable `i` plus the variance of variable `j`
 
-- [ ] the variance of `i` if `i == j`
+- [x] the variance of `i` if `i == j`
 
-- [ ] the same as the `j,i`<sup>th</sup> entry
+- [x] the same as the `j,i`<sup>th</sup> entry
 
-- [ ] the variance of variable `i` and variable `j`
+- [x] the variance of variable `i` and variable `j`
 
 
 ### Question #2
@@ -75,7 +100,7 @@ The correlation coefficient of the variables X and Y is defined as:
 
 - [ ] ρ = σ<sub>XY</sub>
 
-- [ ] ρ = σ<sub>XY</sub> / ( σ<sub>X</sub> σ<sub>Y</sub> )
+- [x] ρ = σ<sub>XY</sub> / ( σ<sub>X</sub> σ<sub>Y</sub> )
 
 - [ ] ρ = σ<sub>XY</sub> / ( σ<sub>XX</sub> σ<sub>YY</sub> )
 
